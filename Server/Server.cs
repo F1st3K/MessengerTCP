@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace Server
 {
     public class Server
     {
+        public static Server Instance { get; private set; }
+        
         private TcpListener _tcpListener;
         private List<ClientObject> _clients;
 
@@ -15,6 +18,7 @@ namespace Server
         {
             _tcpListener = tcpListener;
             _clients = new List<ClientObject>();
+            Instance = this;
         }
 
         public async Task ListenAsync()
@@ -27,14 +31,54 @@ namespace Server
                 {
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
                     var clientObject = new ClientObject(tcpClient);
-                    var reader = new StreamReader(tcpClient.GetStream());
-                    clientObject.UserName = await reader.ReadLineAsync();
                     _clients.Add(clientObject);
                 }
             }
             finally
             {
                 Disconnect();
+            }
+        }
+
+        public async Task ConnectMessageAsync(string userId)
+        {
+            if (TryFindClient(userId, out ClientObject client))
+            {
+                string message = $"[{DateTime.Now}] {client.UserName}\tConnect with server";
+                await BroadcastAsync(message);
+            }
+        }
+        
+        public async Task DisconnectMessageAsync(string userId)
+        {
+            if (TryFindClient(userId, out ClientObject client))
+            {
+                string message = $"[{DateTime.Now}] {client.UserName}\tDisconnect with server";
+                await BroadcastAsync(message);
+            }
+        }
+        
+        public async Task MessageAsync(string message, string userId)
+        {
+            if (TryFindClient(userId, out ClientObject client))
+            {
+                message = $"[{DateTime.Now}] {client.UserName}:\t{message}";
+                await BroadcastAsync(message);
+            }
+        }
+
+        private bool TryFindClient(string userId, out ClientObject clientObject)
+        {
+            clientObject = _clients.FirstOrDefault(c => c.Id == userId);
+            return clientObject != null;
+        }
+        
+        private async Task BroadcastAsync(string message)
+        {
+            foreach (var client in  _clients)
+            {
+                await client.Writer.WriteLineAsync(message);
+                await client.Writer.FlushAsync();
             }
         }
 
