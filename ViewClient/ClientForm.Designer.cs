@@ -28,27 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DIsplay = new System.Windows.Forms.TextBox();
+            this.Display = new System.Windows.Forms.TextBox();
             this._buttonDisconnect = new System.Windows.Forms.Button();
             this._buttonSend = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this._textMessage = new System.Windows.Forms.TextBox();
             this._lableUsername = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // DIsplay
+            // Display
             // 
-            this.DIsplay.AcceptsTab = true;
-            this.DIsplay.Cursor = System.Windows.Forms.Cursors.Default;
-            this.DIsplay.Enabled = false;
-            this.DIsplay.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DIsplay.Location = new System.Drawing.Point(13, 12);
-            this.DIsplay.MaxLength = 2147483647;
-            this.DIsplay.Multiline = true;
-            this.DIsplay.Name = "DIsplay";
-            this.DIsplay.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DIsplay.Size = new System.Drawing.Size(917, 500);
-            this.DIsplay.TabIndex = 99;
-            this.DIsplay.WordWrap = false;
+            this.Display.AcceptsReturn = true;
+            this.Display.AcceptsTab = true;
+            this.Display.AllowDrop = true;
+            this.Display.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Display.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Display.Location = new System.Drawing.Point(13, 12);
+            this.Display.MaxLength = 2147483647;
+            this.Display.Multiline = true;
+            this.Display.Name = "Display";
+            this.Display.ReadOnly = true;
+            this.Display.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.Display.Size = new System.Drawing.Size(917, 500);
+            this.Display.TabIndex = 99;
+            this.Display.WordWrap = false;
             // 
             // _buttonDisconnect
             // 
@@ -68,22 +70,23 @@
             this._buttonSend.TabIndex = 1;
             this._buttonSend.Text = "Send";
             this._buttonSend.UseVisualStyleBackColor = true;
+            this._buttonSend.Click += new System.EventHandler(this._buttonSend_Click);
             // 
-            // textBox1
+            // _textMessage
             // 
-            this.textBox1.Location = new System.Drawing.Point(13, 518);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(917, 91);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.WordWrap = false;
+            this._textMessage.Location = new System.Drawing.Point(13, 518);
+            this._textMessage.Multiline = true;
+            this._textMessage.Name = "_textMessage";
+            this._textMessage.Size = new System.Drawing.Size(917, 91);
+            this._textMessage.TabIndex = 0;
+            this._textMessage.WordWrap = false;
             // 
             // _lableUsername
             // 
             this._lableUsername.AutoSize = true;
             this._lableUsername.Location = new System.Drawing.Point(538, 626);
             this._lableUsername.Name = "_lableUsername";
-            this._lableUsername.Size = new System.Drawing.Size(22, 24);
+            this._lableUsername.Size = new System.Drawing.Size(24, 25);
             this._lableUsername.TabIndex = 4;
             this._lableUsername.Text = "_";
             // 
@@ -94,11 +97,11 @@
             this.ClientSize = new System.Drawing.Size(942, 673);
             this.ControlBox = false;
             this.Controls.Add(this._lableUsername);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this._textMessage);
             this.Controls.Add(this._buttonSend);
             this.Controls.Add(this._buttonDisconnect);
-            this.Controls.Add(this.DIsplay);
-            this.Font = new System.Drawing.Font("Mongolian Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Controls.Add(this.Display);
+            this.Font = new System.Drawing.Font("Mongolian Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;
@@ -108,12 +111,13 @@
             this.Text = "Messanger";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
+
+        private System.Windows.Forms.TextBox _textMessage;
 
         #endregion
 
-        private System.Windows.Forms.TextBox DIsplay;
+        private System.Windows.Forms.TextBox Display;
         private System.Windows.Forms.Button _buttonDisconnect;
         private System.Windows.Forms.Button _buttonSend;
         private System.Windows.Forms.TextBox textBox1;

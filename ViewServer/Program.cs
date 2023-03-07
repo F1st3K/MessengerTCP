@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO.Ports;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -11,7 +10,7 @@ namespace ViewServer
     {
         public static async Task Main(string[] args)
         {
-            var tcpListener = new TcpListener(IPAddress.Any, 0);
+            var tcpListener = new TcpListener(IPAddress.Any, 8888);
             var server = new Server(tcpListener);
             
             server.Started += () => 

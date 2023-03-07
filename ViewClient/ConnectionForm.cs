@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
+using System.Net.Sockets;
 using System.Windows.Forms;
+using ClientLibrary;
 
 namespace ViewClient
 {
@@ -39,9 +41,16 @@ namespace ViewClient
                 MessageBox.Show("Invalid username (>20)!!!");
                 return;
             }
-            Hide();
-            var form = new ClientForm();
-            form.Show();
+
+            var tcpClient = new TcpClient();
+            tcpClient.Connect(_ipAddress, _port);
+            if (tcpClient.Connected)
+            {
+                Hide();
+                var form = new ClientForm(new Client(tcpClient, _username));
+                form.Show();
+            }
+            
         }
 
         
