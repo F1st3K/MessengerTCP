@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Ports;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -14,17 +15,17 @@ namespace ViewServer
             var server = new Server(tcpListener);
             
             server.Started += () => 
-                Console.WriteLine($"ServerLibrary is running on {server.EndPoint}");
+                Console.WriteLine($"Server is running on {server.EndPoint}");
             
             server.Stopped += () => 
-                Console.WriteLine($"ServerLibrary is stopped");
+                Console.WriteLine($"Server is stopped");
             
             server.MessageSented += message => 
-                Console.WriteLine($"|{DateTime.Now}|=>\t{message}");
+                Console.WriteLine($"|{DateTime.Now}|->\t{message}");
 
             Console.CancelKeyPress += (sender, eventArgs) => 
                 server.Disconnect();
-            
+
             await server.ListenAsync();
         }
     }

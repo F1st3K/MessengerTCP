@@ -61,7 +61,7 @@ namespace ServerLibrary
         {
             if (TryFindClient(userId, out Connection client))
             {
-                string message = $"[{DateTime.Now}] {client.UserName}\tConnect with server";
+                string message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}\tConnect with server";
                 await BroadcastAsync(message);
             }
         }
@@ -70,7 +70,7 @@ namespace ServerLibrary
         {
             if (TryFindClient(userId, out Connection client))
             {
-                string message = $"[{DateTime.Now}] {client.UserName}\tDisconnect with server";
+                string message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}\tDisconnect with server";
                 await BroadcastAsync(message);
             }
         }
@@ -79,7 +79,7 @@ namespace ServerLibrary
         {
             if (TryFindClient(userId, out Connection client))
             {
-                message = $"[{DateTime.Now}] {client.UserName}:\t{message}";
+                message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}:\n{message}";
                 await BroadcastAsync(message);
                 MessageSented?.Invoke(message);
             }

@@ -107,7 +107,7 @@
             this._textUserName.Location = new System.Drawing.Point(131, 93);
             this._textUserName.Name = "_textUserName";
             this._textUserName.Size = new System.Drawing.Size(289, 34);
-            this._textUserName.TabIndex = 8;
+            this._textUserName.TabIndex = 2;
             // 
             // ConnectionForm
             // 
@@ -124,7 +124,10 @@
             this.Controls.Add(this._textPort);
             this.Controls.Add(this._textIPAdress);
             this.Font = new System.Drawing.Font("Mongolian Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ConnectionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connection";

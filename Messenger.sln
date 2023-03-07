@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerLibrary", "ServerLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewServer", "ViewServer\ViewServer.csproj", "{79F5FFD4-F2B0-4163-A06C-FB05C28EA950}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "ClientLibrary\ClientLibrary.csproj", "{9029534A-A1A1-4B9B-89C5-7D4F4DA2C4CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewClient", "ViewClient\ViewClient.csproj", "{384EF715-3259-45FC-9A6B-F0AF944DA944}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{79F5FFD4-F2B0-4163-A06C-FB05C28EA950}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79F5FFD4-F2B0-4163-A06C-FB05C28EA950}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79F5FFD4-F2B0-4163-A06C-FB05C28EA950}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9029534A-A1A1-4B9B-89C5-7D4F4DA2C4CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9029534A-A1A1-4B9B-89C5-7D4F4DA2C4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9029534A-A1A1-4B9B-89C5-7D4F4DA2C4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9029534A-A1A1-4B9B-89C5-7D4F4DA2C4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{384EF715-3259-45FC-9A6B-F0AF944DA944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384EF715-3259-45FC-9A6B-F0AF944DA944}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384EF715-3259-45FC-9A6B-F0AF944DA944}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384EF715-3259-45FC-9A6B-F0AF944DA944}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

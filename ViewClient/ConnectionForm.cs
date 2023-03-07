@@ -39,6 +39,9 @@ namespace ViewClient
                 MessageBox.Show("Invalid username (>20)!!!");
                 return;
             }
+            Hide();
+            var form = new ClientForm();
+            form.Show();
         }
 
         
