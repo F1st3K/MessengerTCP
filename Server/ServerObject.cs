@@ -11,6 +11,10 @@ namespace Server
     {
         public static ServerObject Instance { get; private set; }
         public EndPoint EndPoint => _tcpListener.LocalEndpoint;
+        public event Action Started;
+        public event Action Stopped;
+        public delegate void MessageHandler(string message);
+        public event MessageHandler MessageSented;
         
         private TcpListener _tcpListener;
         private List<ClientObject> _clients;
@@ -22,12 +26,13 @@ namespace Server
             Instance = this;
         }
 
+
         public async Task ListenAsync()
         {
             try
             {
                 _tcpListener.Start();
- 
+                Started?.Invoke();
                 while (true)
                 {
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
@@ -42,6 +47,16 @@ namespace Server
             }
         }
 
+        public void Disconnect()
+        {
+            foreach (var client in _clients)
+            {
+                client.Close();
+            }
+            _tcpListener.Stop();
+            Stopped?.Invoke();
+        }
+        
         public async Task ConnectMessageAsync(string userId)
         {
             if (TryFindClient(userId, out ClientObject client))
@@ -66,6 +81,7 @@ namespace Server
             {
                 message = $"[{DateTime.Now}] {client.UserName}:\t{message}";
                 await BroadcastAsync(message);
+                MessageSented?.Invoke(message);
             }
         }
 
@@ -82,15 +98,6 @@ namespace Server
                 await client.Writer.WriteLineAsync(message);
                 await client.Writer.FlushAsync();
             }
-        }
-
-        private void Disconnect()
-        {
-            foreach (var client in _clients)
-            {
-                client.Close();
-            }
-            _tcpListener.Stop();
         }
     }
 }
