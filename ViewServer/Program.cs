@@ -10,7 +10,7 @@ namespace ViewServer
     {
         public static async Task Main(string[] args)
         {
-            var tcpListener = new TcpListener(IPAddress.Any, 8888);
+            var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 8888);
             var server = new Server(tcpListener);
             
             server.Started += () => 

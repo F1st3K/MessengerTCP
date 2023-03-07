@@ -36,9 +36,9 @@ namespace ServerLibrary
                 while (true)
                 {
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
-                    var clientObject = new Connection(tcpClient);
-                    _connections.Add(clientObject);
-                    await Task.Run(clientObject.ProcessAsync);
+                    var connection = new Connection(tcpClient);
+                    _connections.Add(connection);
+                    Task.Run(connection.ProcessAsync);
                 }
             }
             finally
@@ -81,7 +81,6 @@ namespace ServerLibrary
             {
                 message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}:\n{message}";
                 await BroadcastAsync(message);
-                MessageSented?.Invoke(message);
             }
         }
 
@@ -98,6 +97,7 @@ namespace ServerLibrary
                 await client.Writer.WriteLineAsync(message);
                 await client.Writer.FlushAsync();
             }
+            MessageSented?.Invoke(message);
         }
     }
 }
