@@ -42,9 +42,9 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Server\Server.csproj">
+      <ProjectReference Include="..\ServerLibrary\ServerLibrary.csproj">
         <Project>{264b00f0-977c-425b-8934-199fdf653379}</Project>
-        <Name>Server</Name>
+        <Name>ServerLibrary</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

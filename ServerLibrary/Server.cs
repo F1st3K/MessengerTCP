@@ -5,11 +5,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Server
+namespace ServerLibrary
 {
-    public class ServerObject
+    public class Server
     {
-        public static ServerObject Instance { get; private set; }
+        public static Server Instance { get; private set; }
         public EndPoint EndPoint => _tcpListener.LocalEndpoint;
         public event Action Started;
         public event Action Stopped;
@@ -17,12 +17,12 @@ namespace Server
         public event MessageHandler MessageSented;
         
         private TcpListener _tcpListener;
-        private List<ClientObject> _clients;
+        private List<Connection> _connections;
 
-        public ServerObject(TcpListener tcpListener)
+        public Server(TcpListener tcpListener)
         {
             _tcpListener = tcpListener;
-            _clients = new List<ClientObject>();
+            _connections = new List<Connection>();
             Instance = this;
         }
 
@@ -36,8 +36,8 @@ namespace Server
                 while (true)
                 {
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
-                    var clientObject = new ClientObject(tcpClient);
-                    _clients.Add(clientObject);
+                    var clientObject = new Connection(tcpClient);
+                    _connections.Add(clientObject);
                     await Task.Run(clientObject.ProcessAsync);
                 }
             }
@@ -49,7 +49,7 @@ namespace Server
 
         public void Disconnect()
         {
-            foreach (var client in _clients)
+            foreach (var client in _connections)
             {
                 client.Close();
             }
@@ -59,7 +59,7 @@ namespace Server
         
         public async Task ConnectMessageAsync(string userId)
         {
-            if (TryFindClient(userId, out ClientObject client))
+            if (TryFindClient(userId, out Connection client))
             {
                 string message = $"[{DateTime.Now}] {client.UserName}\tConnect with server";
                 await BroadcastAsync(message);
@@ -68,7 +68,7 @@ namespace Server
         
         public async Task DisconnectMessageAsync(string userId)
         {
-            if (TryFindClient(userId, out ClientObject client))
+            if (TryFindClient(userId, out Connection client))
             {
                 string message = $"[{DateTime.Now}] {client.UserName}\tDisconnect with server";
                 await BroadcastAsync(message);
@@ -77,7 +77,7 @@ namespace Server
         
         public async Task MessageAsync(string message, string userId)
         {
-            if (TryFindClient(userId, out ClientObject client))
+            if (TryFindClient(userId, out Connection client))
             {
                 message = $"[{DateTime.Now}] {client.UserName}:\t{message}";
                 await BroadcastAsync(message);
@@ -85,15 +85,15 @@ namespace Server
             }
         }
 
-        private bool TryFindClient(string userId, out ClientObject clientObject)
+        private bool TryFindClient(string userId, out Connection connection)
         {
-            clientObject = _clients.FirstOrDefault(c => c.Id == userId);
-            return clientObject != null;
+            connection = _connections.FirstOrDefault(c => c.Id == userId);
+            return connection != null;
         }
         
         private async Task BroadcastAsync(string message)
         {
-            foreach (var client in  _clients)
+            foreach (var client in  _connections)
             {
                 await client.Writer.WriteLineAsync(message);
                 await client.Writer.FlushAsync();

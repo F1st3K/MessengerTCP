@@ -3,13 +3,13 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Server
+namespace ServerLibrary
 {
-    public class ClientObject
+    public class Connection
     {
         private TcpClient _tcpClient;
         
-        public ClientObject(TcpClient tcpClient)
+        public Connection(TcpClient tcpClient)
         {
             Id = Guid.NewGuid().ToString();
             _tcpClient = tcpClient;
@@ -28,7 +28,7 @@ namespace Server
         public async Task ProcessAsync()
         {
             UserName = await Reader.ReadLineAsync();
-            await ServerObject.Instance.ConnectMessageAsync(Id);
+            await Server.Instance.ConnectMessageAsync(Id);
             while (true)
             {
                 string message;
@@ -36,11 +36,11 @@ namespace Server
                 {
                     message = await Reader.ReadLineAsync();
                     if (message == null) continue;
-                    await ServerObject.Instance.MessageAsync(message, Id);
+                    await Server.Instance.MessageAsync(message, Id);
                 }
                 catch
                 {
-                    await ServerObject.Instance.DisconnectMessageAsync(Id);
+                    await Server.Instance.DisconnectMessageAsync(Id);
                     break;
                 }
             }

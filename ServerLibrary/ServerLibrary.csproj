@@ -7,8 +7,8 @@
         <ProjectGuid>{264B00F0-977C-425B-8934-199FDF653379}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Server</RootNamespace>
-        <AssemblyName>Server</AssemblyName>
+        <RootNamespace>ServerLibrary</RootNamespace>
+        <AssemblyName>ServerLibrary</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -38,9 +38,9 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ClientObject.cs" />
+        <Compile Include="Connection.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="ServerObject.cs" />
+        <Compile Include="Server.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
