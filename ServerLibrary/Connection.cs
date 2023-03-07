@@ -25,17 +25,19 @@ namespace ServerLibrary
         
         protected internal StreamReader Reader { get;}
 
+        protected internal bool Connected => _tcpClient.Connected;
+        
         public async Task ProcessAsync()
         {
             UserName = await Reader.ReadLineAsync();
             await Server.Instance.ConnectMessageAsync(Id);
             while (true)
             {
-                string message;
                 try
                 {
-                    message = await Reader.ReadLineAsync();
-                    if (message == null) continue;
+                    if (Reader.EndOfStream)
+                        continue;
+                    string message = await Reader.ReadLineAsync();
                     await Server.Instance.MessageAsync(message, Id);
                 }
                 catch

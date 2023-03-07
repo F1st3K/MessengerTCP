@@ -33,16 +33,10 @@ namespace ClientLibrary
             SendMessageAsync(_username);
             while (true)
             {
-                try
-                {
-                    string message = await _reader.ReadLineAsync();
-                    if (string.IsNullOrEmpty(message)) continue; 
-                    MessageReceive?.Invoke(message);
-                }
-                catch
-                {
-                    break;
-                }
+                if (_reader.EndOfStream)
+                    continue;
+                string message = await _reader.ReadLineAsync();
+                MessageReceive?.Invoke(message);
             }
         }
 

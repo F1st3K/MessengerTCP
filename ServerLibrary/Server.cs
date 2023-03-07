@@ -49,49 +49,58 @@ namespace ServerLibrary
 
         public void Disconnect()
         {
-            foreach (var client in _connections)
+            foreach (var connection in _connections)
             {
-                client.Close();
+                connection.Close();
             }
             _tcpListener.Stop();
             Stopped?.Invoke();
         }
         
-        public async Task ConnectMessageAsync(string userId)
+        public async Task ConnectMessageAsync(string connectionId)
         {
-            if (TryFindClient(userId, out Connection client))
+            if (TryFindConnection(connectionId, out Connection client))
             {
                 string message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}\tConnect with server";
                 await BroadcastAsync(message);
             }
         }
         
-        public async Task DisconnectMessageAsync(string userId)
+        public async Task DisconnectMessageAsync(string connectionId)
         {
-            if (TryFindClient(userId, out Connection client))
+            if (TryFindConnection(connectionId, out Connection client))
             {
                 string message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}\tDisconnect with server";
                 await BroadcastAsync(message);
             }
         }
         
-        public async Task MessageAsync(string message, string userId)
+        public async Task MessageAsync(string message, string connectionId)
         {
-            if (TryFindClient(userId, out Connection client))
+            if (TryFindConnection(connectionId, out Connection client))
             {
                 message = $"{DateTime.Now:[HH:mm:ss]}\t{client.UserName}:\n{message}";
                 await BroadcastAsync(message);
             }
         }
 
-        private bool TryFindClient(string userId, out Connection connection)
+        public void CheckConnections()
         {
-            connection = _connections.FirstOrDefault(c => c.Id == userId);
+            foreach (var connection in _connections.Where(connection => connection.Connected == false))
+            {
+                _connections.Remove(connection);
+            }
+        }
+
+        private bool TryFindConnection(string connectionId, out Connection connection)
+        {
+            connection = _connections.FirstOrDefault(c => c.Id == connectionId);
             return connection != null;
         }
         
         private async Task BroadcastAsync(string message)
         {
+            CheckConnections();
             foreach (var client in  _connections)
             {
                 await client.Writer.WriteLineAsync(message);

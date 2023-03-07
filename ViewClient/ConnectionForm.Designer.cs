@@ -45,7 +45,7 @@
             this._textIPAdress.Name = "_textIPAdress";
             this._textIPAdress.Size = new System.Drawing.Size(171, 34);
             this._textIPAdress.TabIndex = 0;
-            this._textIPAdress.Text = "255.255.255.255";
+            this._textIPAdress.Text = "127.0.0.1";
             // 
             // _textPort
             // 
@@ -53,7 +53,7 @@
             this._textPort.Name = "_textPort";
             this._textPort.Size = new System.Drawing.Size(171, 34);
             this._textPort.TabIndex = 1;
-            this._textPort.Text = "65535";
+            this._textPort.Text = "8888";
             // 
             // _buttonConnect
             // 
@@ -80,7 +80,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(89, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 24);
+            this.label1.Size = new System.Drawing.Size(40, 25);
             this.label1.TabIndex = 5;
             this.label1.Text = "IP:";
             // 
@@ -89,7 +89,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(71, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 24);
+            this.label2.Size = new System.Drawing.Size(58, 25);
             this.label2.TabIndex = 6;
             this.label2.Text = "port:";
             // 
@@ -98,7 +98,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 96);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 24);
+            this.label3.Size = new System.Drawing.Size(121, 25);
             this.label3.TabIndex = 7;
             this.label3.Text = "UserName:";
             // 
@@ -108,6 +108,7 @@
             this._textUserName.Name = "_textUserName";
             this._textUserName.Size = new System.Drawing.Size(289, 34);
             this._textUserName.TabIndex = 2;
+            this._textUserName.Text = "user";
             // 
             // ConnectionForm
             // 
@@ -123,7 +124,7 @@
             this.Controls.Add(this._buttonConnect);
             this.Controls.Add(this._textPort);
             this.Controls.Add(this._textIPAdress);
-            this.Font = new System.Drawing.Font("Mongolian Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Mongolian Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;
@@ -133,7 +134,6 @@
             this.Text = "Connection";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

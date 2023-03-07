@@ -120,7 +120,6 @@
         private System.Windows.Forms.TextBox Display;
         private System.Windows.Forms.Button _buttonDisconnect;
         private System.Windows.Forms.Button _buttonSend;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label _lableUsername;
     }
 }
