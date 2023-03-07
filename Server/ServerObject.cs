@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Server
 {
-    public class Server
+    public class ServerObject
     {
-        public static Server Instance { get; private set; }
+        public static ServerObject Instance { get; private set; }
+        public EndPoint EndPoint => _tcpListener.LocalEndpoint;
         
         private TcpListener _tcpListener;
         private List<ClientObject> _clients;
 
-        public Server(TcpListener tcpListener)
+        public ServerObject(TcpListener tcpListener)
         {
             _tcpListener = tcpListener;
             _clients = new List<ClientObject>();
@@ -32,6 +33,7 @@ namespace Server
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
                     var clientObject = new ClientObject(tcpClient);
                     _clients.Add(clientObject);
+                    await Task.Run(clientObject.ProcessAsync);
                 }
             }
             finally

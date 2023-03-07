@@ -28,7 +28,7 @@ namespace Server
         public async Task ProcessAsync()
         {
             UserName = await Reader.ReadLineAsync();
-            await Server.Instance.ConnectMessageAsync(Id);
+            await ServerObject.Instance.ConnectMessageAsync(Id);
             while (true)
             {
                 string message;
@@ -36,11 +36,11 @@ namespace Server
                 {
                     message = await Reader.ReadLineAsync();
                     if (message == null) continue;
-                    await Server.Instance.MessageAsync(message, Id);
+                    await ServerObject.Instance.MessageAsync(message, Id);
                 }
                 catch
                 {
-                    await Server.Instance.DisconnectMessageAsync(Id);
+                    await ServerObject.Instance.DisconnectMessageAsync(Id);
                     break;
                 }
             }
