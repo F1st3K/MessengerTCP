@@ -33,18 +33,15 @@ namespace ServerLibrary
             await Server.Instance.ConnectMessageAsync(Id);
             while (true)
             {
-                try
-                {
-                    if (Reader.EndOfStream)
-                        continue;
-                    string message = await Reader.ReadLineAsync();
-                    await Server.Instance.MessageAsync(message, Id);
-                }
-                catch
+                string message = await Reader.ReadLineAsync();
+                if (message is null)
                 {
                     await Server.Instance.DisconnectMessageAsync(Id);
+                    Server.Instance.Remove(this);
                     break;
                 }
+
+                await Server.Instance.MessageAsync(message, Id);
             }
         }
 

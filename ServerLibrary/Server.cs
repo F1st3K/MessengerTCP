@@ -56,6 +56,11 @@ namespace ServerLibrary
             _tcpListener.Stop();
             Stopped?.Invoke();
         }
+
+        public void Remove(Connection connection)
+        {
+            _connections.Remove(connection);
+        }
         
         public async Task ConnectMessageAsync(string connectionId)
         {
@@ -84,14 +89,6 @@ namespace ServerLibrary
             }
         }
 
-        public void CheckConnections()
-        {
-            foreach (var connection in _connections.Where(connection => connection.Connected == false))
-            {
-                _connections.Remove(connection);
-            }
-        }
-
         private bool TryFindConnection(string connectionId, out Connection connection)
         {
             connection = _connections.FirstOrDefault(c => c.Id == connectionId);
@@ -100,7 +97,6 @@ namespace ServerLibrary
         
         private async Task BroadcastAsync(string message)
         {
-            CheckConnections();
             foreach (var client in  _connections)
             {
                 await client.Writer.WriteLineAsync(message);
